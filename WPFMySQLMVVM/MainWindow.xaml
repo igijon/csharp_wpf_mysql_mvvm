@@ -47,7 +47,7 @@
                     BorderBrush="Transparent" 
                     FontSize="20" 
                     FontWeight="Bold" 
-                    Padding="5"
+                    Padding="5" Click="Button_Click"
           />
         </StackPanel>
         <!-- 
