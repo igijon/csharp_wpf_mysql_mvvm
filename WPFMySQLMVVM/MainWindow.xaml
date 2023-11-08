@@ -50,5 +50,26 @@
                     Padding="5"
           />
         </StackPanel>
+        <!-- 
+        Vamos a dibujar el control que mostrará los datos en el área sobrante
+        
+        Agregaremos un scroll por si hay demasiados datos y necesitaré  desplazar 
+        verticalmente los registros 
+        -->
+        <StackPanel Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Margin="5">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" Height="360">
+                <ListView ItemsSource="{Binding registros, Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <Label Content="{Binding usuario}" FontWeight="Bold" FontSize="10"/>
+                                <Label Content="{Binding mail}" FontWeight="Bold" FontSize="10"/>
+                                <Label Content="{Binding edad}" FontWeight="Bold" FontSize="10"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
+        </StackPanel>
     </Grid>
 </Window>
