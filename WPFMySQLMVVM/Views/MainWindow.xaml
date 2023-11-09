@@ -27,7 +27,7 @@
         <DockPanel Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top"
                    HorizontalAlignment="Center">
             <Label Content="Usuario" FontSize="30"/>
-            <TextBox Text="{Binding usuario, Mode=TwoWay}" Width="100"/>
+            <TextBox Text="{Binding userName, Mode=TwoWay}" Width="100"/>
         </DockPanel>
         <DockPanel Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top"
            HorizontalAlignment="Center">
@@ -37,7 +37,7 @@
         <DockPanel Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Top"
            HorizontalAlignment="Center">
             <Label Content="Edad" FontSize="30"/>
-            <TextBox Text="{Binding edad, Mode=TwoWay}" Width="100"/>
+            <TextBox Text="{Binding age, Mode=TwoWay}" Width="100"/>
         </DockPanel>
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Bottom"
            HorizontalAlignment="Center" Margin="100,0,100,10">
@@ -58,13 +58,13 @@
         -->
         <StackPanel Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Margin="5">
             <ScrollViewer VerticalScrollBarVisibility="Visible" Height="360">
-                <ListView ItemsSource="{Binding registros, Mode=TwoWay}">
+                <ListView ItemsSource="{Binding users, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <DockPanel>
-                                <Label Content="{Binding usuario}" FontWeight="Bold" FontSize="10"/>
+                                <Label Content="{Binding userName}" FontWeight="Bold" FontSize="10"/>
                                 <Label Content="{Binding mail}" FontWeight="Bold" FontSize="10"/>
-                                <Label Content="{Binding edad}" FontWeight="Bold" FontSize="10"/>
+                                <Label Content="{Binding age}" FontWeight="Bold" FontSize="10"/>
                             </DockPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
