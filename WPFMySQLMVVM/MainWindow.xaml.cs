@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,8 @@ namespace WPFMySQLMVVM
         {
             InitializeComponent();
             DataContext = model;
+            //Cargamos los datos existentes en la BDD
+            model.LoadUsers();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -46,6 +49,22 @@ namespace WPFMySQLMVVM
                 });
                 //una vez agregado el registro al modelo, lo agregamos a la BDD
                 model.NuevoRegistro();
+            }
+            //Si el registro ya existe, debemos actualizarlo
+            else
+            {
+                foreach(Registro r in model.registros)
+                {
+                    if(r.usuario.Equals(model.usuario))
+                    {
+                        r.mail = model.mail;    
+                        r.edad = model.edad;
+                        break;
+                    }
+                }
+
+                //Actualizamos
+                model.UpdateUser();
             }
         }
     }
@@ -116,6 +135,43 @@ namespace WPFMySQLMVVM
             MySqlCommand cmd = new MySqlCommand(SQL, con);
             cmd.ExecuteNonQuery();
             cmd.Dispose();
+            con.Close();
+        }
+
+        public void UpdateUser()
+        {
+            String SQL = $"UPDATE usuarios SET mail = '{mail}', edad = '{edad}' WHERE usuario = '{usuario}';";
+            MySqlConnection con = new MySqlConnection(cnstr);
+            con.Open();
+            MySqlCommand cmd = new MySqlCommand(SQL, con);
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            con.Close();
+        }
+
+        public void LoadUsers()
+        {
+            String SQL = $"SELECT usuario, mail, edad FROM usuarios;";
+            MySqlConnection con = new MySqlConnection(cnstr);
+            con.Open();
+            DataTable dt = new DataTable();
+            MySqlDataAdapter da = new MySqlDataAdapter(SQL, con);
+            da.Fill(dt);
+            if(dt.Rows.Count > 0)
+            {
+                if (registros == null) registros = new ObservableCollection<Registro>();
+                foreach (DataRow i in dt.Rows)
+                {
+                    registros.Add(new Registro
+                    {
+                        usuario = i[0].ToString(),
+                        mail = i[0].ToString(),
+                        edad = i[0].ToString()
+                    });
+                }
+            }
+            dt.Dispose();
+            da.Dispose();
             con.Close();
         }
     }
